@@ -1,0 +1,39 @@
+#ifndef GraphList_h
+#def GraphList_h
+#include <cstdio>
+#include <cstdlib>
+#inclide <string>
+
+
+class Node{
+ private:
+  bool mvisted;
+  int mlabel;
+  std::vector<Edge> edgeList;
+ public:
+  Node(int label);
+  ~Node();
+  void vist();
+  bool visted();
+  
+    
+};
+class Edge{
+ private:
+  bool mvisted;
+  int mlabel;
+  int mweight;
+  Node mstart;
+  Node send;
+ public:
+  Edge(Node start, Node end
+}
+class GraphList{
+ private:
+  
+ public:
+                                                 
+  
+};
+
+#endef

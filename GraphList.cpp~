@@ -1,0 +1,10 @@
+#include 'GraphList.h'
+
+Node::Node(int label);
+Node::~Node();
+
+void Node::vist(){}
+bool Node::visted()const{}
+void Node::addEdge(Node& dest, int weight){}
+int Node::getDist()const{}
+int Node::setDist(int newDist){}
