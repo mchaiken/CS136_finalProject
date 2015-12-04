@@ -9,8 +9,10 @@ from heapq import heappush, heappop
 
 class PriorityQueue:
 
-    def __init__(self):
+    def __init__(self, other=None):
         self._data = []
+        if other:
+            self.extend(other)
 
     def push(self, val):
         heappush(self._data, val)
@@ -21,4 +23,6 @@ class PriorityQueue:
     def peek(self):
         return self._data[0]
 
-    
+    def extend(self, list):
+        for elem in list:
+            heappush(self._data, elem)
