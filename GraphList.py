@@ -5,7 +5,7 @@ class Node:
         self._label = label
         self._edgeList = []
         
-            # Initialize distance to infinity for Dijkstra's algorithm
+        # Initialize distance to infinity for Dijkstra's algorithm
         self._dist = float("inf")
         
         # Include the label of the source that dist is from
@@ -17,7 +17,7 @@ class Node:
         return self._label
 
     # Returns a tuple (srcLabel, distance) indicating
-    # the current min distance to the vertex and which source
+    # the current min distance to the node and which source
     # the distance is from.
     def dist(self):
         return (self._srcLabel, self._dist)
@@ -35,10 +35,15 @@ class Node:
     def _addEdge(self, e):
         self._edgeList.append(e)
             
-    # A generator to iterate over all vertices adjacent to self.
-    def neighbors(self):
+    # A generator to iterate over all nodes adjacent to self.
+    def neighborsIter(self):
         for edge in self._edgeList:
             yield edge.end()
+            
+    # Returns a collection of all nodes adjacent to self.
+    def neighbors(self):
+        return [ edge.end() for edge in self._edgeList ]
+        
 
 class GraphList:
     class _Edge:
