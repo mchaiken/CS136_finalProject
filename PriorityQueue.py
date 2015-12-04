@@ -1,0 +1,24 @@
+# Wrapper class implementing a priority queue interface
+# using a Python list as the base data structure and
+# algorithms provided by Python's heapq package.
+# Not a complete implementation of a priority queue.
+# Implements a sufficiently functional priority queue for
+# our purposes in Dijkstra's algorithm.
+
+from heapq import heappush, heappop
+
+class PriorityQueue:
+
+    def __init__(self):
+        self._data = []
+
+    def push(self, val):
+        heappush(self._data, val)
+
+    def pop(self):
+        return heappop(self._data)
+
+    def peek(self):
+        return self._data[0]
+
+    
