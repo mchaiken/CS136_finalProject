@@ -24,6 +24,10 @@ class GraphList:
         def __init__(self, label):
             self.label = label
             self._edgeList = []
+            
+            # We'll probably want to use floats for distances.
+            # I just looked it up and Python has infinity (inf) as
+            # a valid float value so we can use that to initialize distance.
             self._dist = sys.maxint
             self._visited = False
         
@@ -52,7 +56,7 @@ class GraphList:
         return self._nodeDict[label].visted()
     
     
-    #View of all vertices adjacent to vertex with label label
+    #View of all edges adjacent to vertex with label label
     def getEdgeList(self, label):
         return self._nodeDict[label]._edgeList
 
