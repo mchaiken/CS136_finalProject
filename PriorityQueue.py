@@ -26,3 +26,10 @@ class PriorityQueue:
     def extend(self, list):
         for elem in list:
             heappush(self._data, elem)
+
+    # Extend the Priority Queue with the contents
+    # provided by a passed iterator. Eliminates the need to
+    # create a list of elements from a graph to add to the queue.
+    def extendIter(self, iter):
+        for elem in iter:
+            heappush(self._data, elem)
