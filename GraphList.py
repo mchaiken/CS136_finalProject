@@ -63,26 +63,40 @@ class GraphList:
     def __init__(self):
         self._nodeDict = {}
     
-    # Mark vertex with label label as “visited” and return previous value of visited flag
+    # Mark node with label label as “visited".
+    # Requires the labeled node be in the graph.
+    # Throws a KeyError if label is not in the graph.
     def visit(self, label):
-        self._nodeDict[label].vist()
-    
-    # Returns true iff vertex/edge has been visited
-    def visited(self, label):
-        return self._nodeDict[label].visted()
+        node = self._nodeDict.get(label)
+        if node:
+            node.visit()
+        else:
+            raise KeyError("Node not in graph")
 
+    # Returns true iff vertex/edge has been visited.
+    # Returns None if label is not in the graph.
+    def visited(self, label):
+        return self._nodeDict.get(label) and self._nodeDict[label].visted()
+
+    # Return the Node associated with label or None
+    # if the label is not in the graph.
     def getNode(self, label):
-        return self._nodeDict(label)
+        return self._nodeDict.get(label)
  
+    # Add a new Node with label as its label to the
+    # graph. Overwrites any existing Node with the same label.
     def addNode(self, label):
         node = Node(label)
         self._nodeDict[label] = node
     
+    # Add an edge from here to there with optional weight edge_weight to
+    # the graph. If here or there is not already in the graph, adds a Node
+    # with the proper label to the graph.
     def addEdge(self, here, there, edge_weight=None):
-        nodeHere = self._nodeDict.setDefault(here, Node(here))
-        nodeThere = self._nodeDict.setDefault(there, Node(there))
-        nodeHere._addEdge( _Edge(here, there, edge_weight) )
-        nodeThere._addEdge( _Edge(there, here, edge_weight) )
+        nodeHere = self._nodeDict.setdefault(here, Node(here))
+        nodeThere = self._nodeDict.setdefault(there, Node(there))
+        nodeHere._addEdge( GraphList._Edge(here, there, edge_weight) )
+        nodeThere._addEdge( GraphList._Edge(there, here, edge_weight) )
     
     # Remove visit
     def reset(self):
