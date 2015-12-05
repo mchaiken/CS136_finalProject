@@ -19,11 +19,12 @@ class PriorityQueue:
 
     def pop(self):
         return heappop(self._data)
-
+    def isEmpty(self):
+        return len(self._data) == 0
     def peek(self):
         return self._data[0]
-
-    def extend(self, list):
+   
+       def extend(self, list):
         for elem in list:
             heappush(self._data, elem)
 

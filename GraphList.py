@@ -20,10 +20,9 @@ class Node:
     # the current min distance to the node and which source
     # the distance is from.
     def dist(self):
-        return (self._srcLabel, self._dist)
+        return self._dist
         
-    def setDist(self, srcLabel, dist):
-        self._srcLabel = srcLabel
+    def setDist(self, dist):
         self._dist = dist
 
     def visit(self):
@@ -38,11 +37,11 @@ class Node:
     # A generator to iterate over all nodes adjacent to self.
     def neighborsIter(self):
         for edge in self._edgeList:
-            yield edge.end()
+            yield (edge._weight, edge.end())
             
     # Returns a collection of all nodes adjacent to self.
     def neighbors(self):
-        return [ edge.end() for edge in self._edgeList ]
+        return [ (edge._weight, edge.end()) for edge in self._edgeList ]
         
 
 class GraphList:
