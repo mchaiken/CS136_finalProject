@@ -1,6 +1,4 @@
-
 class Node:
-    
     def __init__(self, label):
         self._label = label
         self._edgeList = []
@@ -60,7 +58,7 @@ class GraphList:
             
             
     def __init__(self):
-        self._nodeDict = {}
+           self._nodeDict = {}
     
     # Mark node with label label as “visited".
     # Requires the labeled node be in the graph.
@@ -76,9 +74,10 @@ class GraphList:
     # Returns None if label is not in the graph.
     def visited(self, label):
         return self._nodeDict.get(label) and self._nodeDict[label].visted()
+
     def nodeIter(self):
-        for label in self._nodeDict.keys():
-            yield self._nodeDict[label]
+        for node in self._nodeDict.items():
+            yield node[1]
   
     # Return the Node associated with label or None
     # if the label is not in the graph.
@@ -91,6 +90,7 @@ class GraphList:
         node = Node(label)
         self._nodeDict[label] = node
         print (self._nodeDict)
+
     # Add an edge from here to there with optional weight edge_weight to
     # the graph. If here or there is not already in the graph, adds a Node
     # with the proper label to the graph.
