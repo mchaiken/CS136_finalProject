@@ -74,8 +74,8 @@ class GraphList:
         return self._nodeDict.get(label) and self._nodeDict[label].visted()
 
     def nodeIter(self):
-        for node in self._nodeDict.items():
-            yield node[1]
+        for node in self._nodeDict.values():
+            yield node
   
     # Return the Node associated with label or None
     # if the label is not in the graph.
