@@ -25,7 +25,7 @@ def addNeighbors(currentNode, unvisited,graph):
         node = graph.getNode(nodeLabel)
         
         if (not node.visited()) or node.dist() > weight + currentNode.dist():
-            print("CHANGING DISTISTANCE")
+            print("CHANGING DISTANCE")
             node.setDist(weight + currentNode.dist())
             node.visit()
             unvisited.push((node.dist(), node.label()))

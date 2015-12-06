@@ -16,9 +16,7 @@ class Node:
     def label(self):
         return self._label
 
-    # Returns a tuple (srcLabel, distance) indicating
-    # the current min distance to the node and which source
-    # the distance is from.
+    # Returns the current min distance to the node
     def dist(self):
         return self._dist
         
@@ -76,6 +74,7 @@ class GraphList:
     # Returns None if label is not in the graph.
     def visited(self, label):
         return self._nodeDict.get(label) and self._nodeDict[label].visted()
+
     def nodeIter(self):
         for label in self._nodeDict.keys():
             yield self._nodeDict[label]
@@ -91,6 +90,7 @@ class GraphList:
         node = Node(label)
         self._nodeDict[label] = node
         print (self._nodeDict)
+
     # Add an edge from here to there with optional weight edge_weight to
     # the graph. If here or there is not already in the graph, adds a Node
     # with the proper label to the graph.
