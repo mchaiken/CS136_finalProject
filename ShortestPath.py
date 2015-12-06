@@ -17,17 +17,14 @@ def calculateShortestPath(srcLabel, graph):
         print(unvisited.peek()[1])
         currentNode = graph.getNode( unvisited.pop()[1] )
         currentNode.visit()
-        addNeighbors(currentNode, unvisited,graph)
+        checkNeighbors(currentNode, unvisited,graph)
         
 
-def addNeighbors(currentNode, unvisited,graph):
+def checkNeighbors(currentNode, unvisited,graph):
     for weight, nodeLabel in currentNode.neighborsIter():
         node = graph.getNode(nodeLabel)
-        
-        if (not node.visited()) or node.dist() > weight + currentNode.dist():
-            print("CHANGING DISTANCE")
+        if  node.dist() > weight + currentNode.dist():
             node.setDist(weight + currentNode.dist())
-            node.visit()
-            unvisited.push((node.dist(), node.label()))
-        #print("NODE "+str(node))
-        #print("Weight "+str(node.dist()))
+        if not node.visited():
+            unvisited.push((node.dist(),node.label()))
+
