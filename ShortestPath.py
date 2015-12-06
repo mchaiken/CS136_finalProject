@@ -14,7 +14,6 @@ def calculateShortestPath(srcLabel, graph):
     unvisited.push((0,srcLabel))
     graph.getNode(srcLabel).setDist(0)
     while not unvisited.isEmpty():
-        print(unvisited.peek()[1])
         currentNode = graph.getNode( unvisited.pop()[1] )
         currentNode.visit()
         checkNeighbors(currentNode, unvisited,graph)

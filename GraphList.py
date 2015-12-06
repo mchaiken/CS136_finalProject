@@ -1,8 +1,12 @@
 class Node:
-    def __init__(self, label):
+    def __init__(self, label, lat, lon):
         self._label = label
         self._edgeList = []
         
+        # lat, lon intentionally public to avoid writing simple getter/setter methods
+        self.lat = lat
+        self.lon = lon
+
         # Initialize distance to infinity for Dijkstra's algorithm
         self._dist = float("inf")
         
@@ -82,22 +86,21 @@ class GraphList:
     def getNode(self, label):
         return self._nodeDict.get(label)
     
+    # Overload in operator to allow checking if a node is in the graph.
+    # Hashmap lookup, so O(1).
+    def __contains__(self, label):
+        return label in self._nodeDict
+
     # Add a new Node with label as its label to the
-    # graph. Overwrites any existing Node with the same label.
-    def addNode(self, label):
-        node = Node(label)
-        self._nodeDict[label] = node
-        print (self._nodeDict)
+    # graph. Overwrites any existing Node 
+    # with the same label.
+    def addNode(self, label, lat, lon):
+        self._nodeDict[label] = Node(label, lat, lon)
 
     # Add an edge from here to there with optional weight edge_weight to
-    # the graph. If here or there is not already in the graph, adds a Node
-    # with the proper label to the graph.
+    # the graph. Assumes here and there are already in the graph.
     def addEdge(self, here, there, edge_weight=None):
-        nodeHere = self._nodeDict.setdefault(here, Node(here))
-        nodeThere = self._nodeDict.setdefault(there, Node(there))
-        nodeHere._addEdge( GraphList._Edge(here, there, edge_weight) )
-        nodeThere._addEdge( GraphList._Edge(there, here, edge_weight) )
-    
-    # Remove visit
-    def reset(self):
-        pass
+        assert here in self._nodeDict
+        assert there in self._nodeDict
+        self._nodeDict[here]._addEdge( GraphList._Edge(here, there, edge_weight) )
+        self._nodeDict[there]._addEdge( GraphList._Edge(there, here, edge_weight) )

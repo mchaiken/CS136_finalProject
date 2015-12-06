@@ -4,7 +4,7 @@ from xml.sax import parse
 from XMLParseObjects import *
 from math import cos, radians, sqrt
 
-def loadData(xmlFile, graph=None):
+def loadData(xmlFile, graph):
     nodes = {}
     ways = {}
     
@@ -37,7 +37,11 @@ def populateGraph(nodes, ways, graph):
                 if not prevIntersection:
                     prevIntersection = nodeObj
                 else:
-                    # Graph will automatically handle adding nodes if I add edges.
+                    # Check if endpoints of edge are in the graph, if not add them.
+                    if prevIntersection.id not in graph:
+                        graph.addNode(prevIntersection.id, prevIntersection.lat, prevIntersection.lon)
+                    if nodeObj.id not in graph:
+                        graph.addNode(nodeObj.id, nodeObj.lat, nodeObj.lon)
                     graph.addEdge(prevIntersection.id, nodeObj.id, distance)
                     prevIntersection = nodeObj
                     distance = 0

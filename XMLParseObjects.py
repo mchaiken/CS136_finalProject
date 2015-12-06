@@ -1,3 +1,6 @@
+# Objects used to parse osm.xml input data. A Node container class to help
+# store data and two ContentHandler objects to pass to the Python SAX XML
+# parser to handle the data as it is read.
 
 from xml.sax import ContentHandler
 
