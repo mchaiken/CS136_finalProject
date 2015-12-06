@@ -11,7 +11,7 @@ from PriorityQueue import *
 
 def calculateShortestPath(srcList, graph):
     sources = PriorityQueue()
-
+    print(srcList)
     for src in srcList:
         pq = PriorityQueue()
         pq.push(0, src)
@@ -26,9 +26,10 @@ def calculateShortestPath(srcList, graph):
         currentNode.visit()
         checkNeighbors(currentNode, srcPQ, graph)
         if not srcPQ.isEmpty():
-            if srcPQ.peek().visited():
+            if graph.getNode(srcPQ.peek()).visited():
                 srcPQ.pop()
-            sources.push(srcPQ.peekWeight(), srcPQ)
+            if not srcPQ.isEmpty():
+                sources.push(srcPQ.peekWeight(), srcPQ)
         
 
 def checkNeighbors(currentNode, unvisited, graph):
@@ -37,5 +38,5 @@ def checkNeighbors(currentNode, unvisited, graph):
         if  node.dist() > weight + currentNode.dist():
             node.setDist(weight + currentNode.dist())
         if not node.visited():
-            unvisited.push((node.dist(), node.label()))
+            unvisited.push(node.dist(), node.label())
 

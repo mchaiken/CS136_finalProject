@@ -14,6 +14,9 @@ class PriorityQueue:
         if other:
             self.extend(other)
 
+    def __lt__(self, other):
+        return not self.isEmpty() and (self.peekWeight() < other.peekWeight() if not other.isEmpty() else False)
+
     def push(self, weight, value):
         heappush(self._data, (weight, value))
 
