@@ -12,7 +12,8 @@ def main(dataFileName, interactive=False):
     if (interactive):
         return graph
     calculateShortestPath(1,graph)
-
+    for node in graph.nodeIter():
+        print(str(node.label())+ " -- "+str(node.dist()))
 def loadData(fileName, graph):
     tree = et.parse(fileName)
     root = tree.getroot()
@@ -27,3 +28,4 @@ def loadData(fileName, graph):
 
 if __name__ == '__main__':
     main(sys.argv[1])
+    

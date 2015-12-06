@@ -76,12 +76,15 @@ class GraphList:
     # Returns None if label is not in the graph.
     def visited(self, label):
         return self._nodeDict.get(label) and self._nodeDict[label].visted()
-
+    def nodeIter(self):
+        for label in self._nodeDict.keys():
+            yield self._nodeDict[label]
+  
     # Return the Node associated with label or None
     # if the label is not in the graph.
     def getNode(self, label):
         return self._nodeDict.get(label)
- 
+    
     # Add a new Node with label as its label to the
     # graph. Overwrites any existing Node with the same label.
     def addNode(self, label):

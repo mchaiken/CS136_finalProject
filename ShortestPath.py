@@ -12,6 +12,7 @@ from PriorityQueue import *
 def calculateShortestPath(srcLabel, graph):
     unvisited = PriorityQueue()
     unvisited.push((0,srcLabel))
+    graph.getNode(srcLabel).setDist(0)
     while not unvisited.isEmpty():
         print(unvisited.peek()[1])
         currentNode = graph.getNode( unvisited.pop()[1] )
@@ -24,8 +25,9 @@ def addNeighbors(currentNode, unvisited,graph):
         node = graph.getNode(nodeLabel)
         
         if (not node.visited()) or node.dist() > weight + currentNode.dist():
+            print("CHANGING DISTISTANCE")
             node.setDist(weight + currentNode.dist())
             node.visit()
             unvisited.push((node.dist(), node.label()))
-        print("NODE "+str(node))
-        print("Weight "+str(weight))
+        #print("NODE "+str(node))
+        #print("Weight "+str(node.dist()))
