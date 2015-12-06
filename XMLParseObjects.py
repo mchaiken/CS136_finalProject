@@ -4,10 +4,11 @@ from xml.sax import ContentHandler
 
 class OSMNode:
 
-    def __init__(self, lat=None, lon=None):
+    def __init__(self, id, lat=None, lon=None):
         # Mostly a container class. All attributes will be public
         # to eliminate the need for getters and setters.
 
+        self.id = id
         # Number of times the osm node appears in a way
         self.count = 0
         self.lat = lat
@@ -54,9 +55,40 @@ class RelevantDataIdentifier(ContentHandler):
         if name == "way":
             if self._currentWayIsRoad:
                 for nodeID in self._wayNodes:
-                    self._nodesDict.setdefault(nodeID, OSMNode()).foundOccurence()
+                    self._nodesDict.setdefault(nodeID, OSMNode(nodeID)).foundOccurence()
                 self._waysDict[self._currentWay] = self._wayNodes
-                
+            # Clear status variables
             self._currentWay = None
             self._wayNodes = []
             self._currentWayIsRoad = False
+
+# Exception to be raised in CoordinateGetter to abort
+# SAX parsing upon reaching the ways section of the OSM.xml
+# file. Nodes are guaranteed to appear before ways in OSM.xml
+# files and on the second pass through the file all we need to
+# do is pull out the coordinates of the nodes we identified in the first
+# pass, therefore we can save time/space by halting parsing early. 
+class EndOfNodes(Exception):
+    
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        return "Reached the end of nodes section of OSM.xml file"
+
+class CoordinateGetter(ContentHandler):
+
+    def __init__(self, nodesDict):
+        super().__init__()
+
+        # Map of node IDs to OSMNode objects to store count and lon, lat data.
+        self._nodesDict = nodesDict
+
+    def startElement(self, name, attrs):
+        if name == "node":
+            nodeObj = self._nodesDict.get(attrs.getValue("id"))
+            if nodeObj:
+                nodeObj.lon = float(attrs.getValue("lon"))
+                nodeObj.lat = float(attrs.getValue("lat"))
+        if name == "way":
+            raise EndOfNodes()
