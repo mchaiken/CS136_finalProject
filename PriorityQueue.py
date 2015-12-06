@@ -24,7 +24,7 @@ class PriorityQueue:
     def peek(self):
         return self._data[0]
    
-       def extend(self, list):
+    def extend(self, list):
         for elem in list:
             heappush(self._data, elem)
 

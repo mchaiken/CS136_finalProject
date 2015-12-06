@@ -3,6 +3,7 @@
 
 import xml.etree.ElementTree as et
 from GraphList import *
+from ShortestPath import *
 import sys
 
 def main(dataFileName, interactive=False):
@@ -10,6 +11,7 @@ def main(dataFileName, interactive=False):
     loadData(dataFileName, graph)
     if (interactive):
         return graph
+    calculateShortestPath(1,graph)
 
 def loadData(fileName, graph):
     tree = et.parse(fileName)

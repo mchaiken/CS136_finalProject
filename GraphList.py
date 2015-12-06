@@ -52,11 +52,11 @@ class GraphList:
             self._end = end
             self._weight = weight
             
-            def end(self):
-                return self._end
+        def end(self):
+            return self._end
             
-            def start(self):
-                return self._start
+        def start(self):
+            return self._start
             
             
     def __init__(self):
@@ -87,7 +87,7 @@ class GraphList:
     def addNode(self, label):
         node = Node(label)
         self._nodeDict[label] = node
-    
+        print (self._nodeDict)
     # Add an edge from here to there with optional weight edge_weight to
     # the graph. If here or there is not already in the graph, adds a Node
     # with the proper label to the graph.

@@ -2,7 +2,7 @@
 # for determining the shortest path between a source and all
 # Vertices in an undirected, weighted graph.
 
-import PriorityQueue
+from PriorityQueue import *
 
 # Given the label of the source vertex and a graph object,
 # calculates the shortest path from the source to all vertices
@@ -11,18 +11,21 @@ import PriorityQueue
 
 def calculateShortestPath(srcLabel, graph):
     unvisited = PriorityQueue()
-    source  = graph.getNode(srcLabel)
-    unvisited.push((0,source))
+    unvisited.push((0,srcLabel))
     while not unvisited.isEmpty():
-        currentNode = unvisited.pop()[1]
+        print(unvisited.peek()[1])
+        currentNode = graph.getNode( unvisited.pop()[1] )
         currentNode.visit()
-        addNeighbors(currentNode, unvisited)
+        addNeighbors(currentNode, unvisited,graph)
         
 
-def addNeighbors(currentNode, unvisisted):
-    for weight, node in currentNode.neighborsIter:
-        if unvisited or node.getDist() > weight + currentNode.getDist():
-            node.setDist(weight + currentNode.getDist())
-            node.visit()
-            unvisited.push((node.getDist(), node))
+def addNeighbors(currentNode, unvisited,graph):
+    for weight, nodeLabel in currentNode.neighborsIter():
+        node = graph.getNode(nodeLabel)
         
+        if (not node.visited()) or node.dist() > weight + currentNode.dist():
+            node.setDist(weight + currentNode.dist())
+            node.visit()
+            unvisited.push((node.dist(), node.label()))
+        print("NODE "+str(node))
+        print("Weight "+str(weight))
