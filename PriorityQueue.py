@@ -14,17 +14,20 @@ class PriorityQueue:
         if other:
             self.extend(other)
 
-    def push(self, val):
-        heappush(self._data, val)
+    def push(self, weight, value):
+        heappush(self._data, (weight, value))
 
     def pop(self):
-        return heappop(self._data)
+        return heappop(self._data)[1]
 
     def isEmpty(self):
         return len(self._data) == 0
 
     def peek(self):
-        return self._data[0]
+        return self._data[0][1]
+
+    def peekWeight(self):
+        return self._data[0][0]
    
     def extend(self, list):
         for elem in list:

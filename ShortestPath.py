@@ -4,26 +4,38 @@
 
 from PriorityQueue import *
 
-# Given the label of the source vertex and a graph object,
-# calculates the shortest path from the source to all vertices
-# and adds the value to the distance attribute on each vertex.
+# Givenn a list of labels of source nodes and a graph object,
+# calculates the shortest path from a source to all nodes
+# and adds the value to the distance attribute on each node.
 # No return value. Mutates the graph.
 
-def calculateShortestPath(srcLabel, graph):
-    unvisited = PriorityQueue()
-    unvisited.push((0,srcLabel))
-    graph.getNode(srcLabel).setDist(0)
-    while not unvisited.isEmpty():
-        currentNode = graph.getNode( unvisited.pop()[1] )
+def calculateShortestPath(srcList, graph):
+    sources = PriorityQueue()
+
+    for src in srcList:
+        pq = PriorityQueue()
+        pq.push(0, src)
+        sources.push(0, pq)
+        graph.getNode(src).setDist(0)
+    
+    while not sources.isEmpty():
+        srcPQ = sources.pop()
+        currentNode = graph.getNode(srcPQ.pop())
+        if currentNode.visited():
+            currentNode = graph.getNode(srcPQ.pop())
         currentNode.visit()
-        checkNeighbors(currentNode, unvisited,graph)
+        checkNeighbors(currentNode, srcPQ, graph)
+        if not srcPQ.isEmpty():
+            if srcPQ.peek().visited():
+                srcPQ.pop()
+            sources.push(srcPQ.peekWeight(), srcPQ)
         
 
-def checkNeighbors(currentNode, unvisited,graph):
+def checkNeighbors(currentNode, unvisited, graph):
     for weight, nodeLabel in currentNode.neighborsIter():
         node = graph.getNode(nodeLabel)
         if  node.dist() > weight + currentNode.dist():
             node.setDist(weight + currentNode.dist())
         if not node.visited():
-            unvisited.push((node.dist(),node.label()))
+            unvisited.push((node.dist(), node.label()))
 
