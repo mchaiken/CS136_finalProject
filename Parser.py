@@ -18,8 +18,8 @@ def loadData(xmlFile, graph):
         # Catch exception thrown upon reaching ways section of the file
         # to stop parsing and do nothing.
         pass
-    
     populateGraph(nodes, ways, graph)
+
 
 # Iterate through each way identified as a road in order, identify the
 # sections between intersections which will be the edges in our graph,
