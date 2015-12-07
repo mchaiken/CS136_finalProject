@@ -7,7 +7,7 @@ import ShortestPath
 import sys
 import csv
 
-def main(dataFileName, outputFile, *sourceLabels, interactive=False):
+def main(dataFileName, outputFile,output,*sourceLabels,interactive=False):
     graph = GraphList()
     Parser.loadData(dataFileName, graph)
     ShortestPath.calculateShortestPath(sourceLabels[0], graph)
