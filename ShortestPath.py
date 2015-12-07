@@ -11,7 +11,6 @@ from PriorityQueue import *
 
 def calculateShortestPath(srcList, graph):
     sources = PriorityQueue()
-    print(srcList)
     for src in srcList:
         pq = PriorityQueue()
         pq.push(0, src)
@@ -21,15 +20,17 @@ def calculateShortestPath(srcList, graph):
     while not sources.isEmpty():
         srcPQ = sources.pop()
         currentNode = graph.getNode(srcPQ.pop())
-        if currentNode.visited():
+        # Because nodes may be in multiple source priority queues
+        # need to check to make sure min is unvisited, if not pop until
+        # it is unvisited.
+        while not srcPQ.isEmpty() and currentNode.visited():
             currentNode = graph.getNode(srcPQ.pop())
         currentNode.visit()
         checkNeighbors(currentNode, srcPQ, graph)
+        while not srcPQ.isEmpty() and graph.getNode(srcPQ.peek()).visited():
+            srcPQ.pop()
         if not srcPQ.isEmpty():
-            if graph.getNode(srcPQ.peek()).visited():
-                srcPQ.pop()
-            if not srcPQ.isEmpty():
-                sources.push(srcPQ.peekWeight(), srcPQ)
+            sources.push(srcPQ.peekWeight(), srcPQ)
         
 
 def checkNeighbors(currentNode, unvisited, graph):
