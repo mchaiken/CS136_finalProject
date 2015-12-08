@@ -31,7 +31,7 @@ def identifyIntersections(ways):
     print("followed by 'end intersection' for each intersection.")
     print("Enter 'clear' at any point to clear the current intersection entry")
     print("Then enter 'done'.")
-    userInput = input("-->")
+    userInput = input("--> ")
     wayNodeSets = []
     sources = []
     while userInput != "done":
@@ -54,7 +54,7 @@ def identifyIntersections(ways):
                 wayNodeSets.append(set(wayNodeList))
             else:
                 print("Road not found.")
-        userInput = input("-->")
+        userInput = input("--> ")
     return sources
 
 
