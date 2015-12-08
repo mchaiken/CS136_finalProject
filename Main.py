@@ -4,16 +4,20 @@
 import Parser
 from GraphList import GraphList
 import ShortestPath
+from graphviz import Graph
 import sys
 import csv
 
-def main(dataFileName, outputFile,output,*sourceLabels,interactive=False):
+def main(dataFileName, outputFile,outputType,sourceLabels):
     graph = GraphList()
     Parser.loadData(dataFileName, graph)
-    ShortestPath.calculateShortestPath(sourceLabels[0], graph)
-    outputToCSV(graph, outputFile)
-    if (interactive):
-        return graph
+    if outputType=="csv":
+        ShortestPath.calculateShortestPath(sourceLabels, graph)
+        outputToCSV(graph, outputFile)
+    else: 
+        print(sourceLabels)
+        outputToPdf(graph,outputFile,sourceLabels)
+   
 
 def outputToCSV(graph, fileName):
     with open(fileName, 'w') as f:
@@ -22,6 +26,28 @@ def outputToCSV(graph, fileName):
         for node in graph.nodeIter():
             writer.writerow([node.label(), node.dist(), node.lat, node.lon])
 
+def outputToPdf(graph, fileName,sourceLables):
+    e = Graph('NYC', filename=fileName, engine='dot')
+    e.body.extend(['rankdir=LR', 'size="100,100"'])
+    e.attr('node', shape='ellipse')
+    e.attr("node",color='green', style='filled')
+    edgeExists={}
+    for label in sourceLables:
+        e.node(str(label))
+    e.attr("node",color='lightblue2', style='filled')
+    for node in graph.nodeIter():
+        for edge in node.neighborsIter():
+            if not edge[1] in edgeExists:
+                e.attr("edge",labelcolor="blue")
+                e.edge(str(node.label()),edge[1],str(int(edge[0]))+"m")
+        edgeExists[node.label()]=1
+    edgeExists=None
+
+    e.body.append(r'label = "\nIntersections in New York City\n"')
+    e.body.append('fontsize=100')
+    e.view()
+    
+        
 
 # Function to load data from handmade test files
 def loadData(fileName, graph):
@@ -37,5 +63,5 @@ def loadData(fileName, graph):
                           float(elem.get("weight")))
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], sys.argv[3:])
+    main(sys.argv[1], sys.argv[2],sys.argv[3], sys.argv[4:])
     
