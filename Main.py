@@ -7,10 +7,10 @@ import ShortestPath
 import sys
 import csv
 
-def main(dataFileName, outputFile,output,*sourceLabels,interactive=False):
+def main(dataFileName, outputFile, output, interactive=False):
     graph = GraphList()
-    Parser.loadData(dataFileName, graph)
-    ShortestPath.calculateShortestPath(sourceLabels[0], graph)
+    sources = Parser.loadData(dataFileName, graph)
+    ShortestPath.calculateShortestPath(sources, graph)
     outputToCSV(graph, outputFile)
     if (interactive):
         return graph
@@ -37,5 +37,5 @@ def loadData(fileName, graph):
                           float(elem.get("weight")))
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], sys.argv[3:])
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
     

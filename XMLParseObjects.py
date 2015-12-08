@@ -35,13 +35,14 @@ class RelevantDataIdentifier(ContentHandler):
         # lon, lat data.
         self._nodesDict = nodesDict
 
-        # Map of way IDs to lists of nodes that compose the way.
+        # Map of way names to lists of nodes that compose the way.
         self._waysDict = waysDict
         
         # Instance variables to use while parsing
         self._currentWay = None
         self._currentWayIsRoad = False
         self._wayNodes = []
+        self._wayName = None
 
     def startElement(self, name, attrs):
         if name == "way":
@@ -53,17 +54,23 @@ class RelevantDataIdentifier(ContentHandler):
             if (attrs.getValue("k") == "highway" and 
                 attrs.getValue("v") not in RelevantDataIdentifier._notRoads):
                 self._currentWayIsRoad = True
+            elif attrs.getValue("k") == "name":
+                self._wayName = attrs.getValue("v")
 
     def endElement(self, name):
         if name == "way":
             if self._currentWayIsRoad:
+                wayDictNodes = self._waysDict.setdefault(self._wayName or self._currentWay, [])
                 for nodeID in self._wayNodes:
                     self._nodesDict.setdefault(nodeID, OSMNode(nodeID)).foundOccurence()
-                self._waysDict[self._currentWay] = self._wayNodes
+                    if nodeID not in wayDictNodes:
+                        wayDictNodes.append(nodeID)
+                
             # Clear status variables
             self._currentWay = None
             self._wayNodes = []
             self._currentWayIsRoad = False
+            self._wayName = None
 
 # Exception to be raised in CoordinateGetter to abort
 # SAX parsing upon reaching the ways section of the OSM.xml
