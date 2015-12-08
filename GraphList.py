@@ -62,7 +62,7 @@ class GraphList:
     def __init__(self):
            self._nodeDict = {}
     
-    # Mark node with label label as “visited".
+    # Mark node with label label as "visited"
     # Requires the labeled node be in the graph.
     # Throws a KeyError if label is not in the graph.
     def visit(self, label):
