@@ -4,13 +4,13 @@
 
 from PriorityQueue import *
 
-# Givenn a list of labels of source nodes and a graph object,
+# Given a list of labels of source nodes and a graph object,
 # calculates the shortest path from a source to all nodes
 # and adds the value to the distance attribute on each node.
 # No return value. Mutates the graph.
 
 #PostCond: Applies a modified Dijkstra's shortest path algorithm 
-#--------to a given graph for all sources in srcList
+#          to a given graph for all sources in srcList
 def calculateShortestPath(srcList, graph):
     sources = PriorityQueue()
     for src in srcList:
@@ -42,4 +42,3 @@ def _checkNeighbors(currentNode, unvisited, graph):
             node.setDist(weight + currentNode.dist())
         if not node.visited():
             unvisited.push(node.dist(), node.label())
-

@@ -1,5 +1,6 @@
 #Public node class to allow direct manipulation of Nodes in Dijkstra
 class Node:
+    
     def __init__(self, label, lat, lon):
         self._label = label
         self._edgeList = []
@@ -16,7 +17,6 @@ class Node:
         self._srcLabel = None
         self._visited = False
 
-    
     def label(self):
         return self._label
     
@@ -48,6 +48,7 @@ class Node:
 #Undirected GraphList Class containing private edge class,
 #Contains no methods for removing edges or nodes from the graph
 class GraphList:
+    
     #Private edge class. Edges are directed but graph is not
     class _Edge:
         def __init__(self, start, end, weight=None):
@@ -63,7 +64,9 @@ class GraphList:
             
             
     def __init__(self):
-           self._nodeDict = {} #Dictionary of all nodes in Graph with key as int node ID
+        #Dictionary of all nodes in Graph with key as int node ID
+        self._nodeDict = {} 
+           
     #PreCond: Requires the labeled node be in the graph.
     #PostCond:  Mark node with label label as "visited"
     # Throws a KeyError if label is not in the graph.
