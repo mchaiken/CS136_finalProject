@@ -8,7 +8,8 @@ from graphviz import Graph
 import sys
 import csv
 
-
+#PreCond: dataFileName exists, and contains valid OpenStreetMap (OSM) XML
+#PostCond: Reads in datafile, parses, loads into graph and writes output to CSV or PDF
 def main(dataFileName, outputFile, outputType):
     graph = GraphList()
     sources = Parser.loadData(dataFileName, graph)
@@ -18,6 +19,7 @@ def main(dataFileName, outputFile, outputType):
     else: 
         outputToPdf(graph, outputFile, sources)
 
+#PostCond: Outputs nodes and weights to CSV after running Dijkstra
 def outputToCSV(graph, fileName):
     with open(fileName, 'w') as f:
         writer = csv.writer(f)
@@ -25,6 +27,8 @@ def outputToCSV(graph, fileName):
         for node in graph.nodeIter():
             writer.writerow([node.label(), node.dist(), node.lat, node.lon])
 
+#PostCond: Draws graph to a pdf using graphviz instead of running Dijkstra
+#Just for display purposes 
 def outputToPdf(graph, fileName,sourceLables):
     e = Graph('NYC', filename=fileName, engine='dot')
     e.body.extend(['rankdir=LR', 'size="100,100"'])
@@ -46,20 +50,8 @@ def outputToPdf(graph, fileName,sourceLables):
     e.body.append('fontsize=100')
     e.view()
     
-        
-
-# Function to load data from handmade test files
-def loadData(fileName, graph):
-    tree = et.parse(fileName)
-    root = tree.getroot()
-    for elem in root.iter("*"):
-        if elem.tag == "node":
-            # Add node
-            graph.addNode(int(elem.get("id")))
-        elif elem.tag == "edge":
-            # Add edge
-            graph.addEdge(int(elem.get("here")), int(elem.get("there")), 
-                          float(elem.get("weight")))
+    
 
 if __name__ == '__main__':
+    #Command-line arguments: file to read in, file to read out to, whether to output to a CSV or a graph
     main(sys.argv[1], sys.argv[2], sys.argv[3])

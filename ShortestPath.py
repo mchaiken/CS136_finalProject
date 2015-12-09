@@ -9,6 +9,8 @@ from PriorityQueue import *
 # and adds the value to the distance attribute on each node.
 # No return value. Mutates the graph.
 
+#PostCond: Applies a modified Dijkstra's shortest path algorithm 
+#--------to a given graph for all sources in srcList
 def calculateShortestPath(srcList, graph):
     sources = PriorityQueue()
     for src in srcList:
@@ -26,14 +28,14 @@ def calculateShortestPath(srcList, graph):
         while not srcPQ.isEmpty() and currentNode.visited():
             currentNode = graph.getNode(srcPQ.pop())
         currentNode.visit()
-        checkNeighbors(currentNode, srcPQ, graph)
+        _checkNeighbors(currentNode, srcPQ, graph)
         while not srcPQ.isEmpty() and graph.getNode(srcPQ.peek()).visited():
             srcPQ.pop()
         if not srcPQ.isEmpty():
             sources.push(srcPQ.peekWeight(), srcPQ)
         
-
-def checkNeighbors(currentNode, unvisited, graph):
+#PostCond: looks at neighbors, modifies weights, and if unvisited adds to PriorityQueue
+def _checkNeighbors(currentNode, unvisited, graph):
     for weight, nodeLabel in currentNode.neighborsIter():
         node = graph.getNode(nodeLabel)
         if  node.dist() > weight + currentNode.dist():
