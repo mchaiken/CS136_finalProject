@@ -41,3 +41,6 @@ This will output a CSV result file using our demonstration data set
 West 14th St and 5th Ave and 1st Ave and East 26th St. 1st Ave and
 E 26th St is one of the hospital locations from our full data set.
 The other intersection is randomly chosen for demonstration purposes.
+
+Alternatively, to visualize the graph structure run the program with the output
+parameter set to "pdf" instead of "csv".
